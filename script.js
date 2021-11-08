@@ -72,7 +72,9 @@ function handleParticles(){
 }
 
 function animate(){
-    context.clearRect(0, 0, canvas.width, canvas.height) //clean the precvious drawing
+    //another semitransparent painting on top of the canvas -> makes the particles leave trace before vanishing
+    context.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    context.fillRect(0, 0, canvas.width, canvas.height)
     handleParticles()
     requestAnimationFrame(animate) //calls itself -> animation loop
 }
