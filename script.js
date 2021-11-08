@@ -29,7 +29,7 @@ canvas.addEventListener('click', function(event){
 canvas.addEventListener('mousemove', function(event){
     mouse.x = event.x;
     mouse.y = event.y;
-    for(i = 0; i < 10; i++){
+    for(i = 0; i < 6; i++){
         particlesArray.push(new Particle())
         }
    
@@ -65,6 +65,27 @@ function handleParticles(){
     for (let i = 0; i < particlesArray.length; i++){
         particlesArray[i].update();
         particlesArray[i].draw();
+        //constelation effect
+        for (let j = i; j < particlesArray.length; j++){
+           // distance between particles on X axis
+            const dx = particlesArray[i].x - particlesArray[j].x
+            // distance between particles on Y axis
+            const dy = particlesArray[i].y - particlesArray[j].y
+            // distance between particles = (dx^2 + dy^2)^1/2 (Pythagorean theorem)
+            const distance = Math.sqrt(dx*dx + dy*dy)
+
+            if (distance < 100){
+                context.beginPath();
+                context.strokeStyle = particlesArray[i].color
+                context.lineWidth = 0.2
+                context.moveTo(particlesArray[i].x, particlesArray[i].y);
+                context.lineTo(particlesArray[j].x, particlesArray[j].y)
+                context.stroke()
+            }
+        }
+        //
+
+
         // remove too small particles
         if (particlesArray[i].size <= 0.3){
             particlesArray.splice(i, 1)
@@ -76,11 +97,7 @@ function handleParticles(){
 function animate(){
 
     context.clearRect (0, 0, canvas.width, canvas.height)
-    /*another semitransparent painting on top of the canvas -> makes the particles leave trace before vanishing
-    context.fillStyle = 'rgba(0, 0, 0, 0.05)';
-    context.fillRect(0, 0, canvas.width, canvas.height)
-    */
-    hue ++
+    hue +=5
     handleParticles()
     requestAnimationFrame(animate) //calls itself -> animation loop
 }
