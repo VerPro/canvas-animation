@@ -43,6 +43,7 @@ class Particle {
         this.size = Math.random() * 16 + 1;
         this.speedX = Math.random() * 3 - 1;
         this.speedY = Math.random() * 3 - 1;
+        this.color = 'hsl(' + hue + ', 100%, 50%)'
     }
     update(){
         this.x += this.speedX;
@@ -51,7 +52,7 @@ class Particle {
         if (this.size > 0.2) this.size -= 0.1
     }
     draw(){
-        context.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
+        context.fillStyle = this.color ;
         context.beginPath()
         context.arc(this.x, this.y, this.size, 0, Math.PI *2);
         context.fill()
@@ -73,10 +74,12 @@ function handleParticles(){
 }
 
 function animate(){
-    //another semitransparent painting on top of the canvas -> makes the particles leave trace before vanishing
+
+    context.clearRect (0, 0, canvas.width, canvas.height)
+    /*another semitransparent painting on top of the canvas -> makes the particles leave trace before vanishing
     context.fillStyle = 'rgba(0, 0, 0, 0.05)';
     context.fillRect(0, 0, canvas.width, canvas.height)
-    //
+    */
     hue ++
     handleParticles()
     requestAnimationFrame(animate) //calls itself -> animation loop
