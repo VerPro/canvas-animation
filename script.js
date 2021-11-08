@@ -5,6 +5,7 @@ const context = canvas.getContext('2d')
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 const particlesArray = [];
+let hue = 0;
 
 console.log(context)
 
@@ -50,7 +51,7 @@ class Particle {
         if (this.size > 0.2) this.size -= 0.1
     }
     draw(){
-        context.fillStyle = 'salmon';
+        context.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
         context.beginPath()
         context.arc(this.x, this.y, this.size, 0, Math.PI *2);
         context.fill()
@@ -75,6 +76,8 @@ function animate(){
     //another semitransparent painting on top of the canvas -> makes the particles leave trace before vanishing
     context.fillStyle = 'rgba(0, 0, 0, 0.05)';
     context.fillRect(0, 0, canvas.width, canvas.height)
+    //
+    hue ++
     handleParticles()
     requestAnimationFrame(animate) //calls itself -> animation loop
 }
