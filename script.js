@@ -72,9 +72,9 @@ function handleParticles(){
             // distance between particles on Y axis
             const dy = particlesArray[i].y - particlesArray[j].y
             // distance between particles = (dx^2 + dy^2)^1/2 (Pythagorean theorem)
-            const distance = Math.sqrt(dx*dx + dy*dy)
+            const distance = dx*dx + dy*dy
 
-            if (distance < 100){
+            if (distance < 100*100){
                 context.beginPath();
                 context.strokeStyle = particlesArray[i].color
                 context.lineWidth = 0.2
